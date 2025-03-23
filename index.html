@@ -1,7 +1,660 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荣誉墙 - 刘宇航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2A5C84;
+            --secondary: #5DA8B3;
+            --accent: #F2A950;
+        }
+
+        body {
+            font-family: '思源黑体', 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f8fbfd;
+        }
+
+        /* 新型时间轴布局 */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-node {
+            position: relative;
+            padding: 1.5rem;
+            margin-left: 120px;
+            border-left: 3px solid var(--secondary);
+            transition: transform 0.3s;
+        }
+
+        .timeline-node::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 24px;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* 科研项目展示区 */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 竞赛荣誉展示区 */
+        .honor-section {
+            margin: 4rem 0;
+        }
+
+        .honor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .honor-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .honor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .honor-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .honor-content {
+            padding: 1.5rem;
+        }
+
+        .honor-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .timeline-node {
+                margin-left: 60px;
+            }
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="color: var(--primary); font-size: 2.5rem;">
+            <i class="fas fa-robot"></i> 刘宇航
+        </h1>
+        <div style="display: inline-flex; gap: 1rem; background: rgba(45,92,132,0.1); padding: 0.8rem 2rem; border-radius: 30px;">
+            <span><i class="fas fa-map-marker-alt"></i> 家乡：天津宝坻</span>
+            <span><i class="fas fa-user-graduate"></i> 东北大学（秦皇岛）</span>
+            <span><i class="fas fa-star"></i> 专业TOP 0.52%</span>
+        </div>
+    </header>
+
+    <!-- 学术时间轴 -->
+    <section class="timeline-container">
+        <div class="timeline-node">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">
+                <i class="fas fa-graduation-cap"></i> 教育背景
+            </h2>
+            <div style="background: rgba(93,168,179,0.1); padding: 1.5rem; border-radius: 12px;">
+                <h3>计算机科学与技术 学士学位</h3>
+                <p>东北大学（秦皇岛）・2022.09 - 至今</p>
+                <ul>
+                    <li>🏅 专业排名：1/191（前0.52%）</li>
+                    <li>📊 GPA：4.40/5.00</li>
+                    <li>📚 核心课程成绩：高等数学（100）、编译原理（100）、人工智能导论（100）、离散数学（100）、概率论与数理统计（100）、计算机组成原理（99）、C++程序设计（99）、计算机导论（99）、汇编语言程序设计（98）、数据库原理（98）、软件工程（98）等</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-node" style="margin-top: 3rem;">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">
+                <i class="fas fa-flask"></i> 科研经历
+            </h2>
+            <div class="project-grid">
+                <!-- 道路病害项目 -->
+                <div class="project-card">
+                    <h3 style="color: var(--secondary);">道路病害智能检测算法的研究</h3>
+                    <p style="color: #666;">2023.09 - 2024.06</p>
+                    <ul>
+                        <li>🚀 开发多尺度特征融合算法</li>
+                        <li>🏆 获省级优秀结题项目</li>
+                        <li>💻 登记软件著作权一项</li>
+                    </ul>
+                </div>
+
+                <!-- 遥感图像项目 -->
+                <div class="project-card">
+                    <h3 style="color: var(--secondary);">轻量级遥感图像超分辨率重建模型</h3>
+                    <p style="color: #666;">2024.04 - 2025.03</p>
+                    <ul>
+                        <li>🎯 开发SFSIN新型网络结构</li>
+                        <li>📈 PSNR提升0.43dB</li>
+                        <li>📑 申请发明专利一项</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 竞赛荣誉墙 -->
+    <section class="honor-section">
+        <h2 style="color: var(--primary); border-left: 4px solid var(--accent); padding-left: 1rem;">
+            <i class="fas fa-laptop"></i> 人工智能类竞赛
+        </h2>
+        <div class="honor-grid">
+            <!-- AI算法大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/挑战国.jpg" alt="AI算法大赛证书">
+                <div class="honor-content">
+                    <h3>全球校园人工智能算法精英大赛（挑战赛）</h3>
+                    <p>国家级一等奖（全国第一名）</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.11</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI算法大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/应用国.jpg" alt="AI算法大赛证书">
+                <div class="honor-content">
+                    <h3>全球校园人工智能算法精英大赛（应用赛）</h3>
+                    <p>国家级一等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.11</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI算法大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/挑战省.jpg" alt="AI算法大赛证书">
+                <div class="honor-content">
+                    <h3>全球校园人工智能算法精英大赛（挑战赛）</h3>
+                    <p>省级一等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.11</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI算法大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/应用省.jpg" alt="AI算法大赛证书">
+                <div class="honor-content">
+                    <h3>全球校园人工智能算法精英大赛（应用赛）</h3>
+                    <p>省级一等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.11</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- 计算机设计大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/鸡舍.jpg" alt="计算机设计大赛证书">
+                <div class="honor-content">
+                    <h3>计算机设计大赛</h3>
+                    <p>省级二等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.06</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计算机设计大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/华青杯.jpg" alt="计算机设计大赛证书">
+                <div class="honor-content">
+                    <h3>“华青杯”全国大学生人工智能大赛</h3>
+                    <p>二等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.09</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计算机设计大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/大数据应用.jpg" alt="计算机设计大赛证书">
+                <div class="honor-content">
+                    <h3>“尚工”行动岗位能力适应评测</h3>
+                    <p>大数据应用工程师</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.11</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="honor-section">
+        <h2 style="color: var(--primary); border-left: 4px solid var(--accent); padding-left: 1rem;">
+            <i class="fas fa-laptop"></i> 数学建模类竞赛
+        </h2>
+        <div class="honor-grid">
+            <!-- 数学建模竞赛 -->
+
+            <div class="honor-card">
+                <img class="honor-image" src="images/数学建模H奖.jpg" alt="数学建模竞赛证书">
+                <div class="honor-content">
+                    <h3>国际大学生数学建模竞赛</h3>
+                    <p>H奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.04</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计算机设计大赛 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/mmb.jpg" alt="计算机设计大赛证书">
+                <div class="honor-content">
+                    <h3>MathorCup数学应用挑战赛</h3>
+                    <p>三等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-medal"></i>
+                        <span>2024.06</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 荣誉证书板块 -->
+<section class="honor-section">
+    <h2 style="color: var(--primary); border-left: 4px solid var(--accent); padding-left: 1rem;">
+        <i class="fas fa-award"></i> 荣誉称号
+    </h2>
+    <div class="honor-grid">
+        <!-- 三好学生证书 -->
+        <div class="honor-card">
+            <img class="honor-image" src="images/校三好标兵.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>三好学生标兵</h3>
+                <p>2023-2024学年</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2024.11</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/优团标兵.jpg" alt="优秀团员证书">
+            <div class="honor-content">
+                <h3>优秀团员标兵</h3>
+                <p>2023学年</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2024.05</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/校三好.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>三好学生</h3>
+                <p>2022-2023学年</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2023.11</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/优团.jpg" alt="优秀团员证书">
+            <div class="honor-content">
+                <h3>优秀团员</h3>
+                <p>2022学年</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2023.05</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/学习标兵1.jpg" alt="优秀团员证书">
+            <div class="honor-content">
+                <h3>学习标兵</h3>
+                <p>第一学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2023.03</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/学习标兵3.jpg" alt="优秀团员证书">
+            <div class="honor-content">
+                <h3>学习标兵</h3>
+                <p>第三学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2024.03</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/学习标兵4.jpg" alt="优秀团员证书">
+            <div class="honor-content">
+                <h3>学习标兵</h3>
+                <p>第四学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2024.10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/学习标兵5.jpg" alt="优秀团员证书">
+            <div class="honor-content">
+                <h3>学习标兵</h3>
+                <p>第五学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2025.03</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="honor-section">
+    <h2 style="color: var(--primary); border-left: 4px solid var(--accent); padding-left: 1rem;">
+        <i class="fas fa-award"></i> 奖学金证书
+    </h2>
+    <div class="honor-grid">
+        <!-- 三好学生证书 -->
+        <div class="honor-card">
+            <img class="honor-image" src="images/果酱.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>国家奖学金</h3>
+                <p>2023-2024学年</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2024.12</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/1等奖学金.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>校综合一等奖学金</h3>
+                <p>2023-2024学年第一学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2024.04</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/2等奖学金.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>校综合二等奖学金</h3>
+                <p>2022-2023学年第一学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2023.05</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/3等奖学金.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>校综合三等奖学金</h3>
+                <p>2022-2023学年第二学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2023.10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="honor-card">
+            <img class="honor-image" src="images/4级奖学金.jpg" alt="三好学生证书">
+            <div class="honor-content">
+                <h3>英语四级单项奖学金</h3>
+                <p>2023-2024学年第一学期</p>
+                <div class="honor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>2023.11</span>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+
+    </div>
+
+    <section class="honor-section">
+        <h2 style="color: var(--primary); border-left: 4px solid var(--accent); padding-left: 1rem;">
+            <i class="fas fa-award"></i> 语言能力
+        </h2>
+        <div class="honor-grid">
+            <!-- 三好学生证书 -->
+            <div class="honor-card">
+                <img class="honor-image" src="images/大英.jpg" alt="三好学生证书">
+                <div class="honor-content">
+                    <h3>全国大学生英语竞赛</h3>
+                    <p>国家级特等奖</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-star"></i>
+                        <span>2024.05</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="honor-card">
+                <img class="honor-image" src="images/四级.jpg" alt="三好学生证书">
+                <div class="honor-content">
+                    <h3>全国大学英语四级考试</h3>
+                    <p>657分，口语B+</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-star"></i>
+                        <span>2023.03</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="honor-card">
+                <img class="honor-image" src="images/六级.jpg" alt="三好学生证书">
+                <div class="honor-content">
+                    <h3>全国大学英语六级考试</h3>
+                    <p>615分，口语优秀</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-star"></i>
+                        <span>2023.06</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="honor-card">
+                <img class="honor-image" src="images/cdr.jpg" alt="三好学生证书">
+                <div class="honor-content">
+                    <h3>“外教社·词达人杯”英语词汇大赛</h3>
+                    <p>全校第一名</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-star"></i>
+                        <span>2023.06</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="honor-card">
+                <img class="honor-image" src="images/普通话.jpg" alt="三好学生证书">
+                <div class="honor-content">
+                    <h3>普通话水平测试</h3>
+                    <p>91.4分，二级甲等</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-star"></i>
+                        <span>2023.07</span>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+
+        <section class="honor-section">
+            <h2 style="color: var(--primary); border-left: 4px solid var(--accent); padding-left: 1rem;">
+                <i class="fas fa-award"></i> 校园活动
+            </h2>
+            <div class="honor-grid">
+                <!-- 三好学生证书 -->
+                <div class="honor-card">
+                    <img class="honor-image" src="images/职规.jpg" alt="三好学生证书">
+                    <div class="honor-content">
+                        <h3>全国大学生职业生涯规划大赛</h3>
+                        <p>校级三等奖</p>
+                        <div class="honor-badge">
+                            <i class="fas fa-star"></i>
+                            <span>2024.12</span>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="honor-card">
+                    <img class="honor-image" src="images/学习之星.jpg" alt="三好学生证书">
+                    <div class="honor-content">
+                        <h3>学习强国积分争霸赛</h3>
+                        <p>学习之星</p>
+                        <div class="honor-badge">
+                            <i class="fas fa-star"></i>
+                            <span>2023.12</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="honor-card">
+                    <img class="honor-image" src="images/廉洁.jpg" alt="三好学生证书">
+                    <div class="honor-content">
+                        <h3>“东秦廉韵”廉洁文化作品大赛</h3>
+                        <p>校级三等奖</p>
+                        <div class="honor-badge">
+                            <i class="fas fa-star"></i>
+                            <span>2024.09</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="honor-card">
+                    <img class="honor-image" src="images/129.jpg" alt="三好学生证书">
+                    <div class="honor-content">
+                        <h3>“一二·九”运动主题征文</h3>
+                        <p>校级三等奖</p>
+                        <div class="honor-badge">
+                            <i class="fas fa-star"></i>
+                            <span>2023.12</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="honor-card">
+                    <img class="honor-image" src="images/雷锋月.jpg" alt="三好学生证书">
+                    <div class="honor-content">
+                        <h3>雷锋月主题征文</h3>
+                        <p>校级三等奖</p>
+                        <div class="honor-badge">
+                            <i class="fas fa-star"></i>
+                            <span>2023.04</span>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+
+
+</section>
+
+    <!-- 多维能力矩阵 -->
+    <section style="background: rgba(242,169,80,0.05); padding: 2rem; border-radius: 16px;">
+        <h2 style="color: var(--primary);">
+            <i class="fas fa-cubes"></i> 能力立方体
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 1rem;">
+                <i class="fas fa-brain" style="font-size: 2rem; color: var(--secondary);"></i>
+                <h3>算法研发</h3>
+                <p>目标检测/超分重建/强化学习</p>
+            </div>
+            <div style="text-align: center; padding: 1rem;">
+                <i class="fas fa-code" style="font-size: 2rem; color: var(--secondary);"></i>
+                <h3>工程实践</h3>
+                <p>PyTorch/Docker/性能优化</p>
+            </div>
+            <div style="text-align: center; padding: 1rem;">
+                <i class="fas fa-book" style="font-size: 2rem; color: var(--secondary);"></i>
+                <h3>学术能力</h3>
+                <p>专利撰写/论文绘图/LaTeX</p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
