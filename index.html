@@ -186,7 +186,7 @@
             }
 
             .honor-image {
-                height: auto;
+                height: 150px;
             }
 
             .ability-grid {
@@ -720,30 +720,54 @@
             </div>
 
 
-</section>
-
-    <!-- 多维能力矩阵 -->
-    <section style="background: rgba(242,169,80,0.05); padding: 2rem; border-radius: 16px;">
-        <h2 style="color: var(--primary);">
-            <i class="fas fa-cubes"></i> 能力立方体
-        </h2>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
-            <div style="text-align: center; padding: 1rem;">
-                <i class="fas fa-brain" style="font-size: 2rem; color: var(--secondary);"></i>
-                <h3>算法研发</h3>
-                <p>目标检测/超分重建/强化学习</p>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <i class="fas fa-code" style="font-size: 2rem; color: var(--secondary);"></i>
-                <h3>工程实践</h3>
-                <p>PyTorch/Docker/性能优化</p>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <i class="fas fa-book" style="font-size: 2rem; color: var(--secondary);"></i>
-                <h3>学术能力</h3>
-                <p>专利撰写/论文绘图/LaTeX</p>
-            </div>
+<!-- 多维能力矩阵 -->
+<section style="background: rgba(242,169,80,0.05); padding: 2rem; border-radius: 16px;">
+    <h2 style="color: var(--primary);">
+        <i class="fas fa-cubes"></i> 能力立方体
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+        <!-- 算法与模型开发 -->
+        <div style="text-align: center; padding: 1rem;">
+            <i class="fas fa-brain" style="font-size: 2rem; color: var(--secondary);"></i>
+            <h3>算法模型与研发</h3>
+            <p>目标检测 / 超分辨率重建 / 强化学习</p>
         </div>
-    </section>
+
+        <!-- 工程实践与工具 -->
+        <div style="text-align: center; padding: 1rem;">
+            <i class="fas fa-code" style="font-size: 2rem; color: var(--secondary);"></i>
+            <h3>工程实践与工具</h3>
+            <p>PyTorch / Docker / 性能优化</p>
+        </div>
+
+        <!-- 学术研究与写作 -->
+        <div style="text-align: center; padding: 1rem;">
+            <i class="fas fa-book" style="font-size: 2rem; color: var(--secondary);"></i>
+            <h3>学术研究与写作</h3>
+            <p>专利撰写 / 论文绘图 / LaTeX</p>
+        </div>
+
+        <!-- 数据分析与可视化 -->
+        <div style="text-align: center; padding: 1rem;">
+            <i class="fas fa-chart-line" style="font-size: 2rem; color: var(--secondary);"></i>
+            <h3>数据分析与处理</h3>
+            <p>数据清洗 / 可视化 / 机器学习</p>
+        </div>
+
+        <!-- 团队协作与项目管理 -->
+        <div style="text-align: center; padding: 1rem;">
+            <i class="fas fa-users" style="font-size: 2rem; color: var(--secondary);"></i>
+            <h3>团队协作与管理</h3>
+            <p>项目管理 / 跨团队沟通 / 任务分配</p>
+        </div>
+
+        <!-- 创新与问题解决 -->
+        <div style="text-align: center; padding: 1rem;">
+            <i class="fas fa-lightbulb" style="font-size: 2rem; color: var(--secondary);"></i>
+            <h3>创新能力与素养</h3>
+            <p>问题建模 / 解决方案设计 / 优化算法</p>
+        </div>
+    </div>
+</section>
 </body>
 </html>
