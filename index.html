@@ -40,12 +40,12 @@
         }
 
         /* 时间轴布局 */
-        .timeline-container {
+       .timeline-container {
             position: relative;
             padding: 2rem 0;
         }
 
-        .timeline-node {
+       .timeline-node {
             position: relative;
             padding: 1.5rem;
             margin-left: 120px;
@@ -53,7 +53,7 @@
             transition: transform 0.3s;
         }
 
-        .timeline-node::before {
+       .timeline-node::before {
             content: '';
             position: absolute;
             left: -10px;
@@ -65,14 +65,14 @@
         }
 
         /* 项目展示区 */
-        .project-grid {
+       .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
-        .project-card {
+       .project-card {
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
@@ -80,24 +80,31 @@
             border-top: 4px solid var(--primary);
         }
 
-        .project-card:hover {
+       .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
         /* 荣誉展示区 */
-        .honor-section {
+       .honor-section {
             margin: 4rem 0;
         }
 
-        .honor-grid {
+       .honor-section h2 {
+            /* 增加下划线样式，增强视觉区分 */
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+       .honor-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
-        .honor-card {
+       .honor-card {
             background: white;
             border-radius: 12px;
             overflow: hidden;
@@ -105,23 +112,23 @@
             transition: transform 0.3s;
         }
 
-        .honor-card:hover {
+       .honor-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
-        .honor-image {
+       .honor-image {
             width: 100%;
             height: auto;
             object-fit: cover;
             border-bottom: 2px solid var(--accent);
         }
 
-        .honor-content {
+       .honor-content {
             padding: 1.5rem;
         }
 
-        .honor-badge {
+       .honor-badge {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 0.5rem 1rem;
@@ -133,19 +140,19 @@
         }
 
         /* 能力矩阵 */
-        .ability-grid {
+       .ability-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
 
-        .ability-grid div {
+       .ability-grid div {
             text-align: center;
             padding: 1rem;
         }
 
-        .ability-grid i {
+       .ability-grid i {
             font-size: 2rem;
             color: var(--secondary);
         }
@@ -166,47 +173,47 @@
                 padding: 0.5rem;
             }
 
-            .timeline-node {
+           .timeline-node {
                 margin-left: 20px;
                 padding: 1rem;
             }
 
-            .timeline-node::before {
+           .timeline-node::before {
                 left: -8px;
                 top: 20px;
             }
 
-            .project-grid, .honor-grid {
+           .project-grid,.honor-grid {
                 grid-template-columns: repeat(1, 1fr);
                 gap: 1rem;
             }
 
-            .project-card, .honor-card {
+           .project-card,.honor-card {
                 padding: 1rem;
             }
 
-            .honor-image {
+           .honor-image {
                 height: auto;
             }
 
-            .ability-grid {
+           .ability-grid {
                 grid-template-columns: repeat(1, 1fr);
                 gap: 1rem;
             }
 
-            .ability-grid div {
+           .ability-grid div {
                 padding: 0.5rem;
             }
 
-            .honor-section {
+           .honor-section {
                 margin: 2rem 0;
             }
 
-            .honor-grid {
+           .honor-grid {
                 grid-template-columns: repeat(1, 1fr);
             }
 
-            .honor-card {
+           .honor-card {
                 margin-bottom: 1rem;
             }
         }
@@ -236,7 +243,21 @@
                 <ul>
                     <li>🏅 专业排名：1/191（前0.52%）</li>
                     <li>📊 GPA：4.40/5.00</li>
-                    <li>📚 核心课程成绩：高等数学（100）、编译原理（100）、人工智能导论（100）、离散数学（100）、概率论与数理统计（100）、计算机组成原理（99）、C++程序设计（99）、计算机导论（99）、汇编语言程序设计（98）、数据库原理（98）、软件工程（98）等</li>
+                    <li>📚 核心课程成绩：
+                        <ul>
+                            <li>高等数学（100）</li>
+                            <li>编译原理（100）</li>
+                            <li>人工智能导论（100）</li>
+                            <li>离散数学（100）</li>
+                            <li>概率论与数理统计（100）</li>
+                            <li>计算机组成原理（99）</li>
+                            <li>C++程序设计（99）</li>
+                            <li>计算机导论（99）</li>
+                            <li>汇编语言程序设计（98）</li>
+                            <li>数据库原理（98）</li>
+                            <li>软件工程（98）</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -333,7 +354,7 @@
             <div class="honor-card">
                 <img class="honor-image" src="images/鸡舍.jpg" alt="计算机设计大赛证书">
                 <div class="honor-content">
-                    <h3>计算机设计大赛</h3>
+                    <h3>中国大学生计算机设计大赛</h3>
                     <p>作品《锐视·智能视觉工程》，省级二等奖</p>
                     <div class="honor-badge">
                         <i class="fas fa-medal"></i>
@@ -359,7 +380,7 @@
             <div class="honor-card">
                 <img class="honor-image" src="images/大数据应用.jpg" alt="计算机设计大赛证书">
                 <div class="honor-content">
-                    <h3>“尚工”行动岗位能力适应评测</h3>
+                    <h3>工业强国建设素质提升“尚工”行动岗位能力适应评测</h3>
                     <p>大数据应用工程师</p>
                     <div class="honor-badge">
                         <i class="fas fa-medal"></i>
@@ -414,7 +435,7 @@
             <div class="honor-card">
                 <img class="honor-image" src="images/校三好标兵.jpg" alt="三好学生证书">
                 <div class="honor-content">
-                    <h3>三好学生标兵</h3>
+                    <h3>校级三好学生标兵</h3>
                     <p>2023-2024学年</p>
                     <div class="honor-badge">
                         <i class="fas fa-trophy"></i>
@@ -438,7 +459,7 @@
             <div class="honor-card">
                 <img class="honor-image" src="images/校三好.jpg" alt="三好学生证书">
                 <div class="honor-content">
-                    <h3>三好学生</h3>
+                    <h3>校级三好学生</h3>
                     <p>2022-2023学年</p>
                     <div class="honor-badge">
                         <i class="fas fa-trophy"></i>
@@ -592,11 +613,23 @@
             <div class="honor-card">
                 <img class="honor-image" src="images/大英.jpg" alt="三好学生证书">
                 <div class="honor-content">
-                    <h3>全国大学生英语竞赛</h3>
+                    <h3>全国大学生英语竞赛（NECCS）</h3>
                     <p>国家级特等奖</p>
                     <div class="honor-badge">
                         <i class="fas fa-star"></i>
                         <span>2024.05</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="honor-card">
+                <img class="honor-image" src="images/六级.jpg" alt="三好学生证书">
+                <div class="honor-content">
+                    <h3>全国大学英语六级考试</h3>
+                    <p>615分，口语优秀</p>
+                    <div class="honor-badge">
+                        <i class="fas fa-star"></i>
+                        <span>2023.06</span>
                     </div>
                 </div>
             </div>
@@ -614,21 +647,9 @@
             </div>
 
             <div class="honor-card">
-                <img class="honor-image" src="images/六级.jpg" alt="三好学生证书">
-                <div class="honor-content">
-                    <h3>全国大学英语六级考试</h3>
-                    <p>615分，口语优秀</p>
-                    <div class="honor-badge">
-                        <i class="fas fa-star"></i>
-                        <span>2023.06</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="honor-card">
                 <img class="honor-image" src="images/cdr.jpg" alt="三好学生证书">
                 <div class="honor-content">
-                    <h3>“外教社·词达人杯”英语词汇大赛</h3>
+                    <h3>“外教社·词达人杯”全国大学生英语词汇能力大赛</h3>
                     <p>全校第一名</p>
                     <div class="honor-badge">
                         <i class="fas fa-star"></i>
@@ -660,7 +681,7 @@
                 <div class="honor-card">
                     <img class="honor-image" src="images/职规.jpg" alt="三好学生证书">
                     <div class="honor-content">
-                        <h3>全国大学生职业生涯规划大赛</h3>
+                        <h3>全国大学生职业规划大赛</h3>
                         <p>校级三等奖</p>
                         <div class="honor-badge">
                             <i class="fas fa-star"></i>
@@ -696,7 +717,7 @@
                 <div class="honor-card">
                     <img class="honor-image" src="images/129.jpg" alt="三好学生证书">
                     <div class="honor-content">
-                        <h3>“一二·九”运动主题征文</h3>
+                        <h3>“一二·九”运动主题征文活动</h3>
                         <p>校级三等奖</p>
                         <div class="honor-badge">
                             <i class="fas fa-star"></i>
@@ -708,7 +729,7 @@
                 <div class="honor-card">
                     <img class="honor-image" src="images/雷锋月.jpg" alt="三好学生证书">
                     <div class="honor-content">
-                        <h3>雷锋月主题征文</h3>
+                        <h3>雷锋月主题征文活动</h3>
                         <p>校级三等奖</p>
                         <div class="honor-badge">
                             <i class="fas fa-star"></i>
