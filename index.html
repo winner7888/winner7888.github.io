@@ -142,6 +142,7 @@
             border: 1px solid var(--light-3);
             font-weight: 500;
             box-shadow: var(--shadow);
+            background-clip: padding-box; /* 修复边框渲染 */
         }
 
         .filter-tab:hover {
@@ -532,6 +533,12 @@
         .filter-tabs {
             display: flex;
             align-items: center;
+        }
+        
+        .filter-tabs * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         /* 科研经历样式 */
@@ -1673,30 +1680,41 @@
             let currentFilter = 'all';
             let currentSort = 'default';
             
+            // 修改后的排序函数（兼容所有浏览器）
             function updateDisplay() {
-                // 筛选和排序荣誉卡片
-                const cardsArray = Array.from(honorCards);
+                const cardsArray = Array.from(document.querySelectorAll('#honors-container .honor-card'));
                 
-                // 筛选
+                // 筛选逻辑保持不变
                 const filteredCards = cardsArray.filter(card => {
                     return currentFilter === 'all' || card.dataset.category === currentFilter;
                 });
                 
-                // 排序
+                // 改进的排序逻辑（兼容Safari日期解析）
                 if (currentSort !== 'default') {
                     filteredCards.sort((a, b) => {
-                        const dateA = new Date(a.querySelector('.honor-badge span').textContent);
-                        const dateB = new Date(b.querySelector('.honor-badge span').textContent);
+                        const dateStrA = a.querySelector('.honor-badge span').textContent.trim();
+                        const dateStrB = b.querySelector('.honor-badge span').textContent.trim();
+                        
+                        // 兼容所有浏览器的日期解析
+                        const parseDate = (str) => {
+                            const [year, month] = str.split('.').map(Number);
+                            return new Date(year, month - 1); // 月份需要-1
+                        };
+                        
+                        const dateA = parseDate(dateStrA);
+                        const dateB = parseDate(dateStrB);
+                        
                         return currentSort === 'desc' ? dateB - dateA : dateA - dateB;
                     });
                 }
-                
-                // 清空容器并重新添加卡片
-                honorsContainer.innerHTML = '';
-                filteredCards.forEach(card => {
-                    honorsContainer.appendChild(card);
-                });
-            }
+    
+    // 兼容的DOM更新方式
+    const fragment = document.createDocumentFragment();
+    filteredCards.forEach(card => fragment.appendChild(card.cloneNode(true)));
+    
+    honorsContainer.innerHTML = '';
+    honorsContainer.appendChild(fragment);
+}
             
             filterTabs.forEach(tab => {
                 tab.addEventListener('click', function() {
