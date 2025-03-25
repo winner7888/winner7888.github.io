@@ -134,7 +134,7 @@
         }
 
         .filter-tab {
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1rem;
             background: var(--light);
             border-radius: 50px;
             cursor: pointer;
@@ -142,7 +142,10 @@
             border: 1px solid var(--light-3);
             font-weight: 500;
             box-shadow: var(--shadow);
+            font-size: 0.85rem; /* 稍小字号 */
+            white-space: nowrap; /* 防止文字换行 */
         }
+        
 
         .filter-tab:hover {
             transform: translateY(-3px);
@@ -532,6 +535,30 @@
         .filter-tabs {
             display: flex;
             align-items: center;
+            gap: 6px; /* 缩小间隙 */
+            margin-bottom: 30px;
+            overflow-x: auto; /* 允许横向滚动 */
+            padding-bottom: 10px; /* 给滚动条留空间 */
+            -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+        }
+
+        @media (max-width: 576px) {
+            .filter-tab {
+                padding: 0.5rem 0.8rem; /* 更紧凑的按钮 */
+            }
+            
+            /* 分类和排序之间添加视觉分隔 */
+            .filter-tab[data-filter="activities"] {
+                position: relative;
+                margin-right: 15px;
+            }
+            
+            .filter-tab[data-filter="activities"]:after {
+                content: "|";
+                position: absolute;
+                right: -10px;
+                color: var(--light-3);
+            }
         }
 
         /* 科研经历样式 */
