@@ -142,7 +142,6 @@
             border: 1px solid var(--light-3);
             font-weight: 500;
             box-shadow: var(--shadow);
-            background-clip: padding-box; /* 修复边框渲染 */
         }
 
         .filter-tab:hover {
@@ -534,12 +533,6 @@
             display: flex;
             align-items: center;
         }
-        
-        .filter-tabs * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
 
         /* 科研经历样式 */
         .research-container {
@@ -849,9 +842,7 @@
 </head>
 <body>
     <!-- 动态背景元素 -->
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
+
 
     <!-- 英雄区域 -->
     <section class="hero">
@@ -885,7 +876,7 @@
                     </div>
                     
                     <p class="hero-description">
-                        在人工智能与计算机科学的海洋中探索，用代码编织梦想，以算法解决现实问题
+                        在人工智能与计算机科学的海洋中探索，用代码编织梦想，用算法解决现实问题
                     </p>
                 </div>
             </div>
@@ -1680,41 +1671,30 @@
             let currentFilter = 'all';
             let currentSort = 'default';
             
-            // 修改后的排序函数（兼容所有浏览器）
             function updateDisplay() {
-                const cardsArray = Array.from(document.querySelectorAll('#honors-container .honor-card'));
+                // 筛选和排序荣誉卡片
+                const cardsArray = Array.from(honorCards);
                 
-                // 筛选逻辑保持不变
+                // 筛选
                 const filteredCards = cardsArray.filter(card => {
                     return currentFilter === 'all' || card.dataset.category === currentFilter;
                 });
                 
-                // 改进的排序逻辑（兼容Safari日期解析）
+                // 排序
                 if (currentSort !== 'default') {
                     filteredCards.sort((a, b) => {
-                        const dateStrA = a.querySelector('.honor-badge span').textContent.trim();
-                        const dateStrB = b.querySelector('.honor-badge span').textContent.trim();
-                        
-                        // 兼容所有浏览器的日期解析
-                        const parseDate = (str) => {
-                            const [year, month] = str.split('.').map(Number);
-                            return new Date(year, month - 1); // 月份需要-1
-                        };
-                        
-                        const dateA = parseDate(dateStrA);
-                        const dateB = parseDate(dateStrB);
-                        
+                        const dateA = new Date(a.querySelector('.honor-badge span').textContent);
+                        const dateB = new Date(b.querySelector('.honor-badge span').textContent);
                         return currentSort === 'desc' ? dateB - dateA : dateA - dateB;
                     });
                 }
-    
-    // 兼容的DOM更新方式
-    const fragment = document.createDocumentFragment();
-    filteredCards.forEach(card => fragment.appendChild(card.cloneNode(true)));
-    
-    honorsContainer.innerHTML = '';
-    honorsContainer.appendChild(fragment);
-}
+                
+                // 清空容器并重新添加卡片
+                honorsContainer.innerHTML = '';
+                filteredCards.forEach(card => {
+                    honorsContainer.appendChild(card);
+                });
+            }
             
             filterTabs.forEach(tab => {
                 tab.addEventListener('click', function() {
