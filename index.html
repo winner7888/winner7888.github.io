@@ -205,8 +205,24 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(to bottom, var(--light), rgba(255,255,255,0.8));
+            background: 
+        linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7)),
+        url('images/bg.jpg') center/cover no-repeat;
+        background-attachment: fixed; /* 视差滚动效果 */
         }
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(58, 134, 255, 0.1) 0%, 
+                rgba(131, 56, 236, 0.1) 100%);
+            z-index: 1;
+        }
+        
 
         .hero-content {
             position: relative;
@@ -762,6 +778,66 @@
             color: var(--primary);
             font-weight: 700;
         }
+
+        /* 证件照样式 */
+.profile-photo-container {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    position: relative;
+    z-index: 3;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.photo-border {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px dashed var(--primary);
+    border-radius: 50%;
+    animation: rotate 15s linear infinite;
+    z-index: -1;
+}
+
+/* 文字卡片背景 */
+.hero-text-card {
+    background: rgba(255,255,255,0.85);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 动画效果 */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .profile-photo-container {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .hero-text-card {
+        padding: 1.5rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -772,27 +848,39 @@
 
     <!-- 英雄区域 -->
     <section class="hero">
+        <!-- 背景元素保持不变 -->
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">刘宇航</h1>
-                <p class="hero-subtitle">计算机科学与技术 · 专业TOP 0.52%</p>
-                
-                <div class="badge-container">
-                    <div class="profile-badge">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>天津宝坻</span>
-                    </div>
-                    <div class="profile-badge">
-                        <i class="fas fa-user-graduate"></i>
-                        <span>东北大学（秦皇岛）</span>
-                    </div>
-                    <div class="profile-badge">
-                        <i class="fas fa-star"></i>
-                        <span>专业排名1/191</span>
-                    </div>
+                <!-- 证件照容器 -->
+                <div class="profile-photo-container">
+                    <img src="images/bgg.jpg" alt="刘宇航" class="profile-photo">
+                    <div class="photo-border"></div>
                 </div>
                 
-                <p>在人工智能与计算机科学的海洋中探索，用代码编织梦想，以算法解决现实问题，致力于成为技术创新的引领者。</p>
+                <!-- 文字内容添加背景 -->
+                <div class="hero-text-card">
+                    <h1 class="hero-title">刘宇航</h1>
+                    <p class="hero-subtitle">计算机科学与技术 · 专业TOP 0.52%</p>
+                    
+                    <div class="badge-container">
+                        <div class="profile-badge">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>天津宝坻</span>
+                        </div>
+                        <div class="profile-badge">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>东北大学（秦皇岛）</span>
+                        </div>
+                        <div class="profile-badge">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>专业排名 1/191</span>
+                        </div>
+                    </div>
+                    
+                    <p class="hero-description">
+                        在人工智能与计算机科学的海洋中探索，用代码编织梦想，以算法解决现实问题
+                    </p>
+                </div>
             </div>
         </div>
     </section>
