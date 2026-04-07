@@ -54,7 +54,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.72);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0,0,0,0.08);
             transition: var(--transition);
@@ -171,7 +171,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 30px;
         }
 
         .filter-tab {
@@ -197,6 +196,20 @@
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+        }
+
+
+        /* 空状态提示 */
+        .honors-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+        .honors-empty i {
+            font-size: 3rem;
+            color: var(--light-3);
+            margin-bottom: 1rem;
+            display: block;
         }
 
         /* 动态背景元素 */
@@ -255,23 +268,19 @@
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 2.5rem;
             color: var(--secondary);
-            min-height: 2em;
+            min-height: 6em;
         }
-        .typing-cursor {
-            animation: blink 0.8s step-end infinite;
-            font-weight: 300;
-            color: var(--primary);
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
+        .typing-line {
+            line-height: 1.8;
         }
         .counter {
             font-weight: 900;
             color: var(--primary);
-            font-size: 1.1em;
+            font-size: 1.3em;
+            display: inline-block;
         }
 
         .badge-container {
@@ -421,10 +430,31 @@
             transform: translateY(-5px);
         }
 
-        /* 响应式设计 */
+        /* 导航栏滚动高亮 */
+        .nav-links a.nav-active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .nav-links a.nav-active::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            margin-top: 2px;
+            border-radius: 1px;
+        }
+
+        /* 响应式设计 - 合并 */
         @media (max-width: 992px) {
             .honors-container {
                 grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+            .research-card {
+                grid-template-columns: 1fr;
+            }
+            .research-image-container {
+                min-height: 200px;
             }
         }
 
@@ -435,25 +465,33 @@
             .honors-container, .skills-container {
                 grid-template-columns: 1fr;
             }
-            
             .hero {
                 padding-top: 100px;
                 min-height: auto;
                 background-attachment: scroll;
             }
-
+            .education-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .education-icon {
+                margin-bottom: 1rem;
+            }
+            .education-meta {
+                justify-content: center;
+            }
+            .course-grid {
+                grid-template-columns: 1fr 1fr;
+            }
             footer {
                 padding: 60px 0;
             }
-            
             footer h3 {
                 font-size: 1.5rem !important;
             }
-            
             footer p {
                 font-size: 1rem !important;
             }
-            
             footer a {
                 width: 45px !important;
                 height: 45px !important;
@@ -577,17 +615,6 @@
             font-weight: 500;
         }
 
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .research-card {
-                grid-template-columns: 1fr;
-            }
-            
-            .research-image-container {
-                min-height: 200px;
-            }
-        }
-
         @media (max-width: 576px) {
             .research-details {
                 margin-left: 0;
@@ -676,26 +703,6 @@
             color: var(--primary);
             min-width: 40px;
             text-align: right;
-        }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .education-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .education-icon {
-                margin-bottom: 1rem;
-            }
-            
-            .education-meta {
-                justify-content: center;
-            }
-            
-            .course-grid {
-                grid-template-columns: 1fr 1fr;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1205,6 +1212,35 @@
         }
 
         .honor-card { cursor: pointer; }
+
+        /* 卡片上的分类标签 */
+        .honor-category-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(6px);
+            color: var(--primary);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+        .honor-card:hover .honor-category-tag {
+            opacity: 1;
+        }
+
+        /* 禁用态排序按钮 */
+        .filter-tab.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
         /* 响应式调整 */
 @media (max-width: 768px) {

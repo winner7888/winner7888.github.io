@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="刘宇航 - 东北大学计算机科学与技术专业，专业排名TOP 0.52%，JCR一区论文学生一作，全国大学生英语竞赛特等奖">
+    <meta name="description" content="刘宇航 - 东北大学计算机科学与技术专业，专业排名Top 0.52%，JCR一区论文学生一作，全国大学生英语竞赛特等奖">
     <title>刘宇航 - 个人主页</title>
+    <!-- Open Graph 社交分享 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="刘宇航 - 个人主页">
+    <meta property="og:description" content="东北大学计算机科学与技术 | 专业排名1/192 | JCR一区论文学生一作 | 全国大学生英语竞赛特等奖">
+    <meta property="og:image" content="images/bgg.jpg">
+    <meta property="og:url" content="https://winner7888.github.io">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%233a86ff'/><text x='50' y='72' font-size='60' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>刘</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -42,7 +50,7 @@
                 <!-- 文字内容添加背景 -->
                 <div class="hero-text-card">
                     <h1 class="hero-title">刘宇航</h1>
-                    <p class="hero-subtitle"><span id="typingText"></span><span class="typing-cursor">|</span></p>
+                    <div class="hero-subtitle" id="typingLines"></div>
                     
                     <div class="badge-container">
                         <div class="profile-badge">
@@ -223,22 +231,31 @@
 
             <div class="filter-header">
                 <span class="filter-label">分类</span>
+                <div class="filter-tabs multi-select">
+                    <div class="filter-tab active" data-filter="all">全部</div>
+                    <div class="filter-tab active" data-filter="ai">专业竞赛</div>
+                    <div class="filter-tab active" data-filter="math">数学建模</div>
+                    <div class="filter-tab active" data-filter="awards">荣誉称号</div>
+                    <div class="filter-tab active" data-filter="scholarship">奖学金</div>
+                    <div class="filter-tab active" data-filter="language">语言能力</div>
+                    <div class="filter-tab active" data-filter="activities">校园活动</div>
+                </div>
+            </div>
+
+            <div class="filter-header">
+                <span class="filter-label">视图</span>
                 <div class="filter-tabs">
-                    <div class="filter-tab active" data-filter="all">全部荣誉</div>
-                    <div class="filter-tab" data-filter="ai">专业竞赛</div>
-                    <div class="filter-tab" data-filter="math">数学建模</div>
-                    <div class="filter-tab" data-filter="awards">荣誉称号</div>
-                    <div class="filter-tab" data-filter="scholarship">奖学金</div>
-                    <div class="filter-tab" data-filter="language">语言能力</div>
-                    <div class="filter-tab" data-filter="activities">校园活动</div>
+                    <div class="filter-tab view-btn active" id="viewGrid" title="网格视图"><i class="fas fa-th-large"></i> 网格</div>
+                    <div class="filter-tab view-btn" id="timelineToggle" title="时间线视图"><i class="fas fa-stream"></i> 时间线</div>
                 </div>
             </div>
 
             <div class="filter-header">
                 <span class="filter-label">排序</span>
                 <div class="filter-tabs">
-                    <div class="filter-tab sort-btn active" data-sort="desc">最新</div>
-                    <div class="filter-tab sort-btn" data-sort="asc">最早</div>
+                    <div class="filter-tab sort-btn active" data-sort="default">默认</div>
+                    <div class="filter-tab sort-btn disabled" data-sort="desc">最新</div>
+                    <div class="filter-tab sort-btn disabled" data-sort="asc">最早</div>
                 </div>
             </div>
             

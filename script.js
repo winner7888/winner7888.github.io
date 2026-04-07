@@ -41,6 +41,7 @@
         // 创建奖项卡片
         function createHonorCard(h) {
             var icon = h.icon || 'fas fa-medal';
+            var catName = categoryNames[h.category] || h.category;
             var card = document.createElement('div');
             card.className = 'honor-card';
             card.dataset.category = h.category;
@@ -50,6 +51,7 @@
             card.dataset.honorDate = h.date;
             card.innerHTML = '<div class="honor-image-container">' +
                 '<img class="honor-image" src="' + h.image + '" alt="' + h.title + '" loading="lazy">' +
+                '<span class="honor-category-tag">' + catName + '</span>' +
                 '</div>' +
                 '<div class="honor-content">' +
                 '<h3>' + h.title + '</h3>' +
@@ -63,27 +65,48 @@
 
         var honorExpanded = false;
         var HONORS_PREVIEW = 6;
+        var timelineEnabled = false;
+        var userInteracted = false; // 用户是否操作过筛选/排序/视图
 
-        // 从数据渲染奖项卡片
-        function renderHonors(filter, sort) {
+        // 从数据渲染奖项卡片（activeFilters 为分类数组，如 ['ai','math']）
+        function renderHonors(activeFilters, sort) {
             var container = document.getElementById('honors-container');
             if (!container || typeof honorsData === 'undefined') return;
-            
-            var filtered = filter === 'all' ? honorsData.slice() : honorsData.filter(function(h) { return h.category === filter; });
-            
-            if (sort !== 'default') {
+
+            // 多选筛选
+            var filtered = activeFilters.length === 0 ? [] : honorsData.filter(function(h) {
+                return activeFilters.indexOf(h.category) !== -1;
+            });
+
+            // 排序
+            if (sort !== 'default' && filtered.length > 0) {
                 filtered.sort(function(a, b) {
                     var dateA = new Date(a.date.replace(/\./g, '-'));
                     var dateB = new Date(b.date.replace(/\./g, '-'));
                     return sort === 'desc' ? dateB - dateA : dateA - dateB;
                 });
             }
-            
+
             container.innerHTML = '';
-            var isTimeline = true;
-            if (isTimeline) {
+
+            // 空状态
+            if (filtered.length === 0) {
+                container.className = 'honors-container';
+                var empty = document.createElement('div');
+                empty.className = 'honors-empty';
+                empty.innerHTML = '<i class="fas fa-inbox"></i><p>暂无匹配的奖项</p>';
+                container.appendChild(empty);
+                document.getElementById('loadMoreBtn').style.display = 'none';
+                var countEl = document.getElementById('honorsCount');
+                if (countEl) countEl.innerHTML = '当前显示：<strong>0</strong> 项';
+                // 隐藏时间线导航
+                document.getElementById('timelineNav').classList.remove('visible');
+                return;
+            }
+
+            // 时间线视图 or 普通网格
+            if (timelineEnabled) {
                 container.className = 'honors-container timeline-view';
-                // 按日期分组
                 var groups = {};
                 filtered.forEach(function(h) { var k = h.date; if (!groups[k]) groups[k] = []; groups[k].push(h); });
                 Object.keys(groups).forEach(function(dateKey) {
@@ -110,33 +133,43 @@
 
             // 加载更多逻辑
             var loadMoreBtn = document.getElementById('loadMoreBtn');
-            if (!honorExpanded && filtered.length > HONORS_PREVIEW) {
+            var shouldFold = !honorExpanded && !userInteracted && filtered.length > HONORS_PREVIEW;
+            if (shouldFold) {
                 var allCards = container.querySelectorAll('.honor-card');
                 allCards.forEach(function(card, i) {
                     if (i >= HONORS_PREVIEW) card.style.display = 'none';
                 });
-                // 隐藏所有卡片都被隐藏的日期组
-                container.querySelectorAll('.timeline-date-group').forEach(function(group) {
-                    var visibleCards = group.querySelectorAll('.honor-card:not([style*="display: none"])');
-                    if (visibleCards.length === 0) group.style.display = 'none';
-                });
+                if (timelineEnabled) {
+                    container.querySelectorAll('.timeline-date-group').forEach(function(group) {
+                        var visibleCards = group.querySelectorAll('.honor-card:not([style*="display: none"])');
+                        if (visibleCards.length === 0) group.style.display = 'none';
+                    });
+                }
                 loadMoreBtn.style.display = 'inline-flex';
                 loadMoreBtn.className = 'load-more-btn';
                 loadMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> 展开全部 ' + filtered.length + ' 项奖项';
             } else if (loadMoreBtn) {
-                loadMoreBtn.style.display = filtered.length > HONORS_PREVIEW ? 'inline-flex' : 'none';
-                if (filtered.length > HONORS_PREVIEW) {
+                if (userInteracted) {
+                    loadMoreBtn.style.display = 'none';
+                } else if (filtered.length > HONORS_PREVIEW) {
+                    loadMoreBtn.style.display = 'inline-flex';
                     loadMoreBtn.className = 'load-more-btn expanded';
                     loadMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> 收起奖项';
+                } else {
+                    loadMoreBtn.style.display = 'none';
                 }
             }
 
             // 更新计数
             var countEl = document.getElementById('honorsCount');
             if (countEl) {
-                var catName = categoryNames[filter] || '全部';
-                var shown = (!honorExpanded && filtered.length > HONORS_PREVIEW) ? HONORS_PREVIEW : filtered.length;
-                countEl.innerHTML = '当前显示：<strong>' + shown + '</strong> / ' + filtered.length + ' 项' + (filter !== 'all' ? '（' + catName + '）' : '');
+                var shown = shouldFold ? HONORS_PREVIEW : filtered.length;
+                var catDesc = '';
+                if (activeFilters.length < Object.keys(categoryNames).length - 1) {
+                    // 不是全选，显示分类名
+                    catDesc = '（' + activeFilters.map(function(f) { return categoryNames[f] || f; }).join('、') + '）';
+                }
+                countEl.innerHTML = '当前显示：<strong>' + shown + '</strong> / ' + filtered.length + ' 项' + catDesc;
             }
 
             // 绑定点击事件
@@ -146,97 +179,242 @@
                 });
             });
 
-            // 重建时间线导航
-            if (typeof window.rebuildTimelineNav === 'function') window.rebuildTimelineNav();
+            // 重建时间线导航（仅在时间线模式下）
+            if (timelineEnabled && typeof window.rebuildTimelineNav === 'function') {
+                window.rebuildTimelineNav();
+            } else {
+                document.getElementById('timelineNav').classList.remove('visible');
+            }
         }
 
-        // 打字机效果
+        // 打字机效果（逐行打出，保留不删除）
         (function() {
             var texts = [
-                '计算机科学与技术 · 专业TOP 0.52%',
+                '计算机科学与技术 · 专业排名Top 0.52%',
                 'JCR一区论文学生一作 · 发明专利',
-                '全国英语竞赛特等奖 · CET-6 615分',
-                '中共党员 · 东北大学'
+                '全国大学生英语竞赛特等奖 · CET-6 615分'
             ];
-            var el = document.getElementById('typingText');
-            if (!el) return;
-            var textIdx = 0, charIdx = 0, deleting = false;
+            var container = document.getElementById('typingLines');
+            if (!container) return;
+            var textIdx = 0, charIdx = 0;
+            var currentLine = null;
+
+            function startLine() {
+                currentLine = document.createElement('div');
+                currentLine.className = 'typing-line';
+                currentLine.style.minHeight = '1.8em';
+                container.appendChild(currentLine);
+            }
+
             function type() {
-                var current = texts[textIdx];
-                if (!deleting) {
-                    el.textContent = current.substring(0, charIdx + 1);
-                    charIdx++;
-                    if (charIdx >= current.length) {
-                        setTimeout(function() { deleting = true; type(); }, 2000);
-                        return;
-                    }
-                    setTimeout(type, 80);
-                } else {
-                    el.textContent = current.substring(0, charIdx - 1);
-                    charIdx--;
-                    if (charIdx <= 0) {
-                        deleting = false;
-                        textIdx = (textIdx + 1) % texts.length;
-                        setTimeout(type, 400);
-                        return;
-                    }
-                    setTimeout(type, 40);
+                if (textIdx >= texts.length) {
+                    // 所有行打完，保留不消失
+                    return;
                 }
+                var current = texts[textIdx];
+                if (charIdx === 0) startLine();
+                charIdx++;
+                currentLine.textContent = current.substring(0, charIdx);
+                if (charIdx >= current.length) {
+                    // 当前行打完
+                    currentLine.classList.add('done');
+                    textIdx++;
+                    charIdx = 0;
+                    setTimeout(type, 400);
+                    return;
+                }
+                setTimeout(type, 60);
             }
             setTimeout(type, 800);
         })();
 
-        // 数字滚动动画
+        // 数字滚动动画（更快更有冲击力）
         function animateCounters() {
             document.querySelectorAll('.counter').forEach(function(el) {
                 var target = parseInt(el.dataset.target);
-                var duration = 1500;
+                var duration = 1000; // 更快
                 var start = performance.now();
                 function step(now) {
                     var progress = Math.min((now - start) / duration, 1);
-                    var eased = 1 - Math.pow(1 - progress, 3);
+                    // 强弹性效果
+                    var eased = 1 - Math.pow(1 - progress, 2);
                     el.textContent = Math.round(target * eased);
-                    if (progress < 1) requestAnimationFrame(step);
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        // 数字到位后闪烁一下
+                        el.style.transform = 'scale(1.5)';
+                        el.style.transition = 'transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                        setTimeout(function() { el.style.transform = 'scale(1)'; }, 150);
+                    }
                 }
                 requestAnimationFrame(step);
             });
         }
-        setTimeout(animateCounters, 500);
+        setTimeout(animateCounters, 300);
+
+        // 渲染课程（数据来自 courses.js）
+        function renderCourses() {
+            var container = document.getElementById('course-grid');
+            if (!container || typeof coursesData === 'undefined') return;
+            container.innerHTML = '';
+            coursesData.forEach(function(c) {
+                var div = document.createElement('div');
+                div.className = 'course-item';
+                div.innerHTML = '<span class="course-name">' + c.name + '</span><span class="course-grade">' + c.grade + '</span>';
+                container.appendChild(div);
+            });
+            // 省略号：表示还有更多课程
+            var more = document.createElement('div');
+            more.className = 'course-item';
+            more.innerHTML = '<span class="course-name">···</span><span class="course-grade"></span>';
+            more.style.opacity = '0.5';
+            more.style.cursor = 'default';
+            container.appendChild(more);
+        }
 
         // 筛选和排序功能
         document.addEventListener('DOMContentLoaded', function() {
             // 渲染课程
             renderCourses();
-            // 初始渲染奖项
-            renderHonors('all', 'desc');
-            
-            const filterTabs = document.querySelectorAll('.filter-tab');
-            const sortButtons = document.querySelectorAll('.sort-btn');
-            
-            let currentFilter = 'all';
-            let currentSort = 'desc';
-            
+
+            // 所有分类 key（不含 'all'）
+            var allCategoryKeys = Object.keys(categoryNames).filter(function(k) { return k !== 'all'; });
+            var currentSort = 'default';
+            var activeFilters = allCategoryKeys.slice(); // 默认全选
+            var sortButtons = document.querySelectorAll('.sort-btn');
+            var defaultSortBtn = document.querySelector('.sort-btn[data-sort="default"]');
+
+            // 获取当前激活的筛选数组
+            function getActiveFilters() {
+                var tabs = document.querySelectorAll('.multi-select .filter-tab[data-filter]');
+                var active = [];
+                tabs.forEach(function(tab) {
+                    if (tab.classList.contains('active') && tab.dataset.filter !== 'all') {
+                        active.push(tab.dataset.filter);
+                    }
+                });
+                return active;
+            }
+
+            // 启用/禁用排序按钮
+            function setSortEnabled(enabled) {
+                sortButtons.forEach(function(btn) {
+                    if (enabled) {
+                        btn.classList.remove('disabled');
+                    } else {
+                        btn.classList.add('disabled');
+                        btn.classList.remove('active');
+                    }
+                });
+                if (enabled) {
+                    // 时间线模式下禁用"默认"按钮，自动选中"最新"
+                    defaultSortBtn.classList.add('disabled');
+                    defaultSortBtn.classList.remove('active');
+                } else {
+                    defaultSortBtn.classList.remove('disabled');
+                    defaultSortBtn.classList.add('active');
+                    currentSort = 'default';
+                }
+            }
+
+            // 初始渲染奖项（默认排序）
+            renderHonors(activeFilters, 'default');
+
             // 加载更多按钮
             document.getElementById('loadMoreBtn').addEventListener('click', function() {
                 honorExpanded = !honorExpanded;
-                renderHonors(currentFilter, currentSort);
+                renderHonors(getActiveFilters(), currentSort);
             });
 
-            filterTabs.forEach(tab => {
+            // 分类多选逻辑
+            var categoryTabs = document.querySelectorAll('.multi-select .filter-tab[data-filter]');
+            var allTab = document.querySelector('.multi-select .filter-tab[data-filter="all"]');
+
+            categoryTabs.forEach(function(tab) {
                 tab.addEventListener('click', function() {
+                    userInteracted = true;
                     honorExpanded = false;
-                    if (this.classList.contains('sort-btn')) {
-                        sortButtons.forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-                        currentSort = this.dataset.sort;
-                        renderHonors(currentFilter, currentSort);
-                    } else if (this.dataset.filter) {
-                        document.querySelectorAll('.filter-tab[data-filter]').forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
-                        currentFilter = this.dataset.filter;
-                        renderHonors(currentFilter, currentSort);
+                    var filter = this.dataset.filter;
+
+                    if (filter === 'all') {
+                        // 切换全选/全不选
+                        var individualTabs = document.querySelectorAll('.multi-select .filter-tab[data-filter]:not([data-filter="all"])');
+                        var allActive = true;
+                        individualTabs.forEach(function(t) {
+                            if (!t.classList.contains('active')) allActive = false;
+                        });
+                        if (allActive) {
+                            // 当前全选 → 全不选
+                            categoryTabs.forEach(function(t) { t.classList.remove('active'); });
+                            allTab.classList.remove('active');
+                        } else {
+                            // 当前非全选 → 全选
+                            categoryTabs.forEach(function(t) { t.classList.add('active'); });
+                            allTab.classList.add('active');
+                        }
+                    } else {
+                        // 切换单个分类
+                        this.classList.toggle('active');
+                        // 检查是否全选
+                        var individualTabs = document.querySelectorAll('.multi-select .filter-tab[data-filter]:not([data-filter="all"])');
+                        var allActive = true;
+                        individualTabs.forEach(function(t) {
+                            if (!t.classList.contains('active')) allActive = false;
+                        });
+                        if (allActive) {
+                            allTab.classList.add('active');
+                        } else {
+                            allTab.classList.remove('active');
+                        }
                     }
+
+                    renderHonors(getActiveFilters(), currentSort);
                 });
+            });
+
+            // 排序按钮（禁用态不可点击，保持单选）
+            sortButtons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    if (this.classList.contains('disabled')) return;
+                    userInteracted = true;
+                    honorExpanded = false;
+                    sortButtons.forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    currentSort = this.dataset.sort;
+                    renderHonors(getActiveFilters(), currentSort);
+                });
+            });
+
+            // 视图切换（网格 / 时间线）
+            var viewGrid = document.getElementById('viewGrid');
+            var viewTimeline = document.getElementById('timelineToggle');
+
+            viewGrid.addEventListener('click', function() {
+                if (!timelineEnabled) return;
+                userInteracted = true;
+                timelineEnabled = false;
+                viewGrid.classList.add('active');
+                viewTimeline.classList.remove('active');
+                honorExpanded = false;
+                setSortEnabled(false);
+                renderHonors(getActiveFilters(), currentSort);
+            });
+
+            viewTimeline.addEventListener('click', function() {
+                if (timelineEnabled) return;
+                userInteracted = true;
+                timelineEnabled = true;
+                viewTimeline.classList.add('active');
+                viewGrid.classList.remove('active');
+                honorExpanded = false;
+                // 启用排序，自动选中"最新"
+                setSortEnabled(true);
+                sortButtons.forEach(function(b) { b.classList.remove('active'); });
+                var descBtn = document.querySelector('.sort-btn[data-sort="desc"]');
+                if (descBtn) descBtn.classList.add('active');
+                currentSort = 'desc';
+                renderHonors(getActiveFilters(), currentSort);
             });
             
             // 滚动动画
@@ -336,8 +514,9 @@
             // 初始构建
             setTimeout(buildTimelineNav, 100);
 
-            // 滚动时显示/隐藏 + 高亮当前
+            // 滚动时显示/隐藏 + 高亮当前（仅在时间线模式下）
             window.addEventListener('scroll', function() {
+                if (!timelineEnabled) return;
                 var rect = honorsSection.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     timelineNav.classList.add('visible');
@@ -398,4 +577,27 @@
                     }
                 });
             });
+
+            // 导航栏滚动高亮
+            var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            var sections = [];
+            navLinks.forEach(function(link) {
+                var sec = document.querySelector(link.getAttribute('href'));
+                if (sec) sections.push({ el: sec, link: link });
+            });
+
+            function updateNavHighlight() {
+                var scrollPos = window.scrollY + 120;
+                var activeLink = null;
+                for (var i = sections.length - 1; i >= 0; i--) {
+                    if (sections[i].el.offsetTop <= scrollPos) {
+                        activeLink = sections[i].link;
+                        break;
+                    }
+                }
+                navLinks.forEach(function(l) { l.classList.remove('nav-active'); });
+                if (activeLink) activeLink.classList.add('nav-active');
+            }
+            window.addEventListener('scroll', updateNavHighlight);
+            updateNavHighlight();
         });

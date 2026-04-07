@@ -28,15 +28,3 @@ var coursesData = [
     { name: '算法设计与分析', grade: 96 }
 ];
 
-// 渲染课程
-function renderCourses() {
-    var container = document.getElementById('course-grid');
-    if (!container || typeof coursesData === 'undefined') return;
-    container.innerHTML = '';
-    coursesData.forEach(function(c) {
-        var div = document.createElement('div');
-        div.className = 'course-item';
-        div.innerHTML = '<span class="course-name">' + c.name + '</span><span class="course-grade">' + c.grade + '</span>';
-        container.appendChild(div);
-    });
-}
