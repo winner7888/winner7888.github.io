@@ -208,7 +208,10 @@
 
             function type() {
                 if (textIdx >= texts.length) {
-                    // 所有行打完，保留不消失
+                    // 所有行打完，添加闪烁光标
+                    var cursor = document.createElement('span');
+                    cursor.className = 'typing-cursor';
+                    currentLine.appendChild(cursor);
                     return;
                 }
                 var current = texts[textIdx];
@@ -242,10 +245,10 @@
                     if (progress < 1) {
                         requestAnimationFrame(step);
                     } else {
-                        // 数字到位后闪烁一下
-                        el.style.transform = 'scale(1.5)';
-                        el.style.transition = 'transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                        setTimeout(function() { el.style.transform = 'scale(1)'; }, 150);
+                        // 数字到位后平滑归位
+                        el.style.transform = 'scale(1.15)';
+                        el.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+                        setTimeout(function() { el.style.transform = 'scale(1)'; }, 200);
                     }
                 }
                 requestAnimationFrame(step);
@@ -438,7 +441,7 @@
             animateElements.forEach(el => {
                 el.style.opacity = 0;
                 el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                el.style.transition = 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
                 observer.observe(el);
             });
 
@@ -458,23 +461,20 @@
                 });
             }
 
-            // 暗色模式
-            var darkToggle = document.getElementById('darkToggle');
+            // 暗色模式（Firefox 风格拨动开关）
+            var darkToggleInput = document.getElementById('darkToggleInput');
             var savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkToggleInput.checked = true;
             }
-            darkToggle.addEventListener('click', function() {
-                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                    document.documentElement.removeAttribute('data-theme');
-                    localStorage.setItem('theme', 'light');
-                    darkToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                } else {
+            darkToggleInput.addEventListener('change', function() {
+                if (this.checked) {
                     document.documentElement.setAttribute('data-theme', 'dark');
                     localStorage.setItem('theme', 'dark');
-                    darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
                 }
             });
 
@@ -600,4 +600,65 @@
             }
             window.addEventListener('scroll', updateNavHighlight);
             updateNavHighlight();
+
+            // 滚到底部庆祝 Toast
+            var celebrationShown = false;
+            var celebrationToast = document.createElement('div');
+            celebrationToast.className = 'celebration-toast';
+            celebrationToast.innerHTML = '🎉 感谢你看到最后！';
+            document.body.appendChild(celebrationToast);
+            window.addEventListener('scroll', function() {
+                if (celebrationShown) return;
+                var scrollBottom = document.documentElement.scrollHeight - window.innerHeight - window.scrollY;
+                if (scrollBottom < 200) {
+                    celebrationShown = true;
+                    celebrationToast.classList.add('show');
+                    setTimeout(function() {
+                        celebrationToast.classList.remove('show');
+                    }, 4000);
+                }
+            });
+
+            // Konami Code 彩蛋：↑↑↓↓←→←→BA
+            var konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+            var konamiIdx = 0;
+            document.addEventListener('keydown', function(e) {
+                if (e.key === konamiCode[konamiIdx]) {
+                    konamiIdx++;
+                    if (konamiIdx === konamiCode.length) {
+                        konamiIdx = 0;
+                        // 触发彩蛋
+                        var msg = document.createElement('div');
+                        msg.className = 'konami-message';
+                        msg.innerHTML = '🎮 你发现了隐藏彩蛋！<br><span style="font-size:0.8em;font-weight:400;color:#a78bfa;">你是真正的高手 ✨</span>';
+                        document.body.appendChild(msg);
+                        setTimeout(function() { msg.classList.add('show'); }, 50);
+                        // 全屏烟花
+                        var colors = ['#3a86ff', '#8338ec', '#ff006e', '#ffbe0b', '#06d6a0', '#fb5607'];
+                        for (var i = 0; i < 80; i++) {
+                            (function(idx) {
+                                setTimeout(function() {
+                                    var piece = document.createElement('div');
+                                    piece.className = 'confetti-piece';
+                                    var color = colors[Math.floor(Math.random() * colors.length)];
+                                    var size = Math.random() * 10 + 6;
+                                    var startX = Math.random() * window.innerWidth;
+                                    var startY = Math.random() * window.innerHeight * 0.5;
+                                    var shapes = ['50%', '0%', '30%'];
+                                    piece.style.cssText = 'left:' + startX + 'px;top:' + startY + 'px;width:' + size + 'px;height:' + size + 'px;background:' + color + ';border-radius:' + shapes[Math.floor(Math.random() * 3)] + ';animation-duration:' + (1.5 + Math.random()) + 's;';
+                                    document.body.appendChild(piece);
+                                    setTimeout(function() { piece.remove(); }, 3000);
+                                }, idx * 30);
+                            })(i);
+                        }
+                        setTimeout(function() {
+                            msg.classList.remove('show');
+                            setTimeout(function() { msg.remove(); }, 500);
+                        }, 3500);
+                    }
+                } else {
+                    konamiIdx = 0;
+                    if (e.key === konamiCode[0]) konamiIdx = 1;
+                }
+            });
         });

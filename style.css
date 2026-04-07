@@ -10,7 +10,7 @@
             --accent-light: rgba(255, 0, 110, 0.1);
             --dark: #212529;
             --gray: #6c757d;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
         }
@@ -83,6 +83,13 @@
             font-weight: 500;
             font-size: 0.9rem;
             color: var(--dark);
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            position: relative;
+        }
+        .nav-links a:hover {
+            background: rgba(58, 134, 255, 0.08);
+            color: var(--primary);
         }
 
         .container {
@@ -94,6 +101,9 @@
         section {
             padding: 80px 0;
             position: relative;
+        }
+        section:nth-of-type(even) {
+            background: linear-gradient(135deg, rgba(58,134,255,0.02) 0%, rgba(131,56,236,0.03) 100%);
         }
 
         h1, h2, h3, h4 {
@@ -193,9 +203,10 @@
         }
 
         .filter-tab.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--primary);
+            font-weight: 700;
+            border-color: rgba(58, 134, 255, 0.2);
         }
 
 
@@ -323,16 +334,16 @@
             background: var(--light);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0,0,0,0.06);
             display: flex;
             flex-direction: column;
         }
 
         .honor-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .honor-image-container {
@@ -383,14 +394,14 @@
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0,0,0,0.06);
         }
 
         .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .skill-icon {
@@ -411,7 +422,7 @@
             width: 0;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 3px;
-            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* 页脚样式 */
@@ -424,25 +435,39 @@
             overflow: hidden;
         }
 
-        /* 社交图标悬停效果 */
+        /* 社交图标基础+悬停 */
+        footer a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
         footer a:hover {
             background: rgba(255,255,255,0.2) !important;
             transform: translateY(-5px);
         }
 
-        /* 导航栏滚动高亮 */
+        /* 导航栏滚动高亮 - Firefox 标签页风格 */
         .nav-links a.nav-active {
             color: var(--primary);
             font-weight: 700;
+            background: rgba(58, 134, 255, 0.1);
         }
         .nav-links a.nav-active::after {
             content: '';
-            display: block;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-            margin-top: 2px;
-            border-radius: 1px;
+            position: absolute;
+            bottom: -2px;
+            left: 8px;
+            right: 8px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px 3px 0 0;
         }
 
         /* 响应式设计 - 合并 */
@@ -527,16 +552,16 @@
             background: var(--light);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0,0,0,0.06);
             display: grid;
             grid-template-columns: 1fr 1.5fr;
         }
 
         .research-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .research-image-container {
@@ -613,6 +638,11 @@
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 500;
+            transition: var(--transition);
+        }
+        .tech-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 134, 255, 0.2);
         }
 
         @media (max-width: 576px) {
@@ -630,16 +660,16 @@
             background: var(--light);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0,0,0,0.06);
             
             margin: 0 auto;
         }
 
         .education-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
         .education-header {
@@ -696,6 +726,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: var(--transition);
+        }
+        .course-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .course-grade {
@@ -783,7 +818,7 @@
         .scroll-indicator {
             text-align: center;
             margin-top: 2.5rem;
-            animation: fadeInUp 1s ease 1.5s both;
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both;
         }
         .scroll-indicator span {
             display: block;
@@ -802,7 +837,7 @@
             border-radius: 50%;
             color: var(--primary);
             font-size: 1rem;
-            animation: bounceDown 2s ease-in-out infinite;
+            animation: bounceDown 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -837,7 +872,7 @@
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 4px 20px rgba(58, 134, 255, 0.4);
             z-index: 999;
         }
@@ -893,28 +928,77 @@
         [data-theme="dark"] .profile-photo { border-color: var(--light-3); }
         [data-theme="dark"] .photo-border { border-color: #a78bfa; }
 
-        .dark-toggle {
-            background: none;
-            border: 2px solid var(--light-3);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Firefox 风格暗色模式拨动开关 */
+        .dark-toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
             cursor: pointer;
-            transition: var(--transition);
-            color: var(--dark);
-            font-size: 0.95rem;
+            flex-shrink: 0;
         }
-        .dark-toggle:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: rotate(30deg);
+        .dark-toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--light-3);
+            border-radius: 13px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .toggle-icon-light,
+        .toggle-icon-dark {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.6rem;
+            transition: opacity 0.3s ease;
+        }
+        .toggle-icon-light {
+            right: 7px;
+            color: #f59e0b;
+            opacity: 1;
+        }
+        .toggle-icon-dark {
+            left: 7px;
+            color: #a78bfa;
+            opacity: 0.3;
+        }
+        .dark-toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+        .dark-toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+        .dark-toggle-switch input:checked + .toggle-slider .toggle-icon-light {
+            opacity: 0.3;
+        }
+        .dark-toggle-switch input:checked + .toggle-slider .toggle-icon-dark {
+            opacity: 1;
+        }
+        .dark-toggle-switch:hover .toggle-slider {
+            box-shadow: 0 0 0 3px var(--primary-light);
         }
 
         html {
             scroll-padding-top: 80px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--light-2);
         }
 
         /* 奖项计数 */
@@ -1089,7 +1173,7 @@
             box-shadow: 0 8px 25px rgba(58,134,255,0.4);
         }
         .load-more-btn i {
-            transition: transform 0.3s;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .load-more-btn.expanded i {
             transform: rotate(180deg);
@@ -1104,7 +1188,7 @@
             z-index: 998;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             max-height: 70vh;
             display: flex;
             flex-direction: column;
@@ -1149,7 +1233,7 @@
             gap: 8px;
             padding: 4px 10px 4px 0;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             white-space: nowrap;
         }
@@ -1163,7 +1247,7 @@
             flex-shrink: 0;
             position: relative;
             z-index: 1;
-            transition: all 0.2s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .timeline-nav-item:hover::before {
             background: var(--primary);
@@ -1186,7 +1270,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             opacity: 0;
             transform: translateX(5px);
-            transition: all 0.2s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
         @media (max-width: 1200px) {
@@ -1204,7 +1288,7 @@
             height: 10px;
             z-index: 99999;
             pointer-events: none;
-            animation: confettiFall 1.5s ease-out forwards;
+            animation: confettiFall 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes confettiFall {
             0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
@@ -1228,11 +1312,82 @@
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             opacity: 0.7;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 2;
         }
         .honor-card:hover .honor-category-tag {
             opacity: 1;
+        }
+
+        /* 打字机闪烁光标 */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: var(--primary);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 标题 hover 发光 */
+        h2 {
+            transition: text-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        h2:hover {
+            text-shadow: 0 0 20px rgba(58, 134, 255, 0.3), 0 0 40px rgba(131, 56, 236, 0.15);
+        }
+
+        /* 底部庆祝 Toast */
+        .celebration-toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(58, 134, 255, 0.4);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .celebration-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Konami 彩蛋消息 */
+        .konami-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            z-index: 100000;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(131, 56, 236, 0.5);
+        }
+        .konami-message.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
         /* 禁用态排序按钮 */
@@ -1240,6 +1395,36 @@
             opacity: 0.4;
             cursor: not-allowed;
             pointer-events: none;
+        }
+
+        /* Firefox 风格自定义滚动条 (webkit) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--light-2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--accent));
+        }
+
+        /* Firefox 风格 focus ring */
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        .nav-links a:focus-visible {
+            outline-offset: 0;
+            border-radius: 8px;
+        }
+        .filter-tab:focus-visible,
+        .load-more-btn:focus-visible {
+            outline-offset: 2px;
         }
 
         /* 响应式调整 */
