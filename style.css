@@ -1,4 +1,4 @@
-﻿        :root {
+        :root {
             --light: #ffffff;
             --light-2: #f8f9fa;
             --light-3: #e9ecef;
@@ -7,12 +7,8 @@
             --secondary: #8338ec;
             --secondary-light: rgba(131, 56, 236, 0.1);
             --accent: #ff006e;
-            --accent-light: rgba(255, 0, 110, 0.1);
             --dark: #212529;
             --gray: #6c757d;
-            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -56,8 +52,8 @@
             z-index: 1000;
             background: rgba(255,255,255,0.72);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            transition: background 0.2s ease;
             padding: 0;
         }
         .nav-inner {
@@ -126,6 +122,10 @@
             margin-bottom: 2.5rem;
             position: relative;
             display: inline-block;
+            transition: text-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        h2:hover {
+            text-shadow: 0 0 20px rgba(58, 134, 255, 0.3), 0 0 40px rgba(131, 56, 236, 0.15);
         }
 
         h2:after {
@@ -134,7 +134,7 @@
             left: 0;
             bottom: -10px;
             width: 100%;
-            height: 4px;
+            height: 3px;
             background: linear-gradient(90deg, var(--primary), transparent);
             border-radius: 2px;
         }
@@ -152,7 +152,7 @@
         a {
             color: var(--primary);
             text-decoration: none;
-            transition: var(--transition);
+            transition: color 0.15s ease;
         }
 
         a:hover {
@@ -170,7 +170,7 @@
         }
 
         li:before {
-            content: '▹';
+            content: '•';
             position: absolute;
             left: 0;
             color: var(--primary);
@@ -229,13 +229,6 @@
             filter: blur(60px);
             opacity: 0.2;
             z-index: -1;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(50px, 50px); }
-            50% { transform: translate(100px, 0); }
-            75% { transform: translate(50px, -50px); }
         }
 
         /* 英雄区域 */
@@ -434,23 +427,13 @@
             overflow: hidden;
         }
 
-        /* 社交图标基础+悬停 */
-        footer a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        footer a:hover {
-            background: rgba(255,255,255,0.2) !important;
-            transform: translateY(-5px);
-        }
+        /* 页脚内容样式 */
+        .footer-inner { max-width: 600px; margin: 0 auto; }
+        .footer-title { color: white; margin-bottom: 1.5rem; font-size: 2rem; }
+        .footer-desc { margin-bottom: 2rem; opacity: 0.8; font-size: 1.1rem; }
+        .footer-divider { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; }
+        .footer-copyright { font-size: 0.9rem; opacity: 0.6; margin-bottom: 0.5rem; }
+        .footer-motto { font-size: 0.8rem; opacity: 0.5; }
 
         /* 导航栏滚动高亮 - Firefox 标签页风格 */
         .nav-links a.nav-active {
@@ -515,11 +498,6 @@
             }
             footer p {
                 font-size: 1rem !important;
-            }
-            footer a {
-                width: 45px !important;
-                height: 45px !important;
-                font-size: 1.5rem !important;
             }
         }
 
@@ -616,7 +594,7 @@
         }
 
         .research-details li:before {
-            content: "▹";
+            content: "•";
             position: absolute;
             left: 0;
             color: var(--primary);
@@ -723,11 +701,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: var(--transition);
+            transition: background 0.15s ease;
         }
         .course-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            background: var(--primary-light);
         }
 
         .course-grade {
@@ -750,7 +727,7 @@
         }
         
         .highlight-list li:before {
-            content: "▹";
+            content: "•";
             position: absolute;
             left: 0;
             color: var(--primary);
@@ -837,7 +814,7 @@
             font-size: 1rem;
             animation: bounceDown 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
             cursor: pointer;
-            transition: var(--transition);
+            transition: background 0.15s ease, color 0.15s ease;
         }
         .scroll-arrow:hover {
             background: var(--primary);
@@ -870,8 +847,8 @@
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 20px rgba(58, 134, 255, 0.4);
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            box-shadow: none;
             z-index: 999;
         }
         .back-to-top.visible {
@@ -879,8 +856,7 @@
             visibility: visible;
         }
         .back-to-top:hover {
-            transform: translateY(-4px) scale(1.1);
-            box-shadow: 0 8px 30px rgba(58, 134, 255, 0.5);
+            background: #2563eb;
         }
 
         /* 暗色模式 — Firefox Proton 中性深灰 */
@@ -890,8 +866,6 @@
             --light-3: #3a3944;
             --dark: #fbfbfe;
             --gray: #a0a0b0;
-            --shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.4);
         }
         [data-theme="dark"] body {
             background-color: var(--light-2);
@@ -1037,7 +1011,7 @@
             font-size: 2.5rem;
             cursor: pointer;
             z-index: 10001;
-            transition: var(--transition);
+            transition: color 0.3s ease, transform 0.3s ease;
             line-height: 1;
         }
         .lightbox-close:hover {
@@ -1254,9 +1228,6 @@
             opacity: 1;
             transform: translateX(0);
         }
-        .timeline-nav-item .nav-dot {
-            display: none;
-        }
         .nav-label {
             font-size: 0.7rem;
             font-weight: 600;
@@ -1330,14 +1301,6 @@
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
-        }
-
-        /* 标题 hover 发光 */
-        h2 {
-            transition: text-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        h2:hover {
-            text-shadow: 0 0 20px rgba(58, 134, 255, 0.3), 0 0 40px rgba(131, 56, 236, 0.15);
         }
 
         /* 底部庆祝 Toast */

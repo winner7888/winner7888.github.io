@@ -445,11 +445,6 @@
                 observer.observe(el);
             });
 
-            // 图片懒加载（科研图片）
-            document.querySelectorAll('.research-image').forEach(function(img) {
-                img.setAttribute('loading', 'lazy');
-            });
-
             // 向下滚动箭头点击
             var scrollArrow = document.querySelector('.scroll-arrow');
             if (scrollArrow) {
@@ -546,24 +541,29 @@
                 }
             });
 
+            // 烟花彩蛋通用函数
+            var confettiColors = ['#3a86ff', '#8338ec', '#ff006e', '#ffbe0b', '#06d6a0', '#fb5607'];
+            function spawnConfetti(x, y, count, spread) {
+                for (var i = 0; i < count; i++) {
+                    var piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    var color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                    var size = Math.random() * 8 + 6;
+                    var startX = x + (Math.random() - 0.5) * spread;
+                    var startY = y + (Math.random() - 0.5) * (spread / 2);
+                    var shapes = ['50%', '0%', '30%'];
+                    piece.style.cssText = 'left:' + startX + 'px;top:' + startY + 'px;width:' + size + 'px;height:' + size + 'px;background:' + color + ';border-radius:' + shapes[Math.floor(Math.random() * 3)] + ';animation-duration:' + (1 + Math.random()) + 's;';
+                    document.body.appendChild(piece);
+                    setTimeout(function(p) { p.remove(); }.bind(null, piece), 2500);
+                }
+            }
+
             // 彩蛋：双击头像触发烟花
             var photo = document.querySelector('.profile-photo');
             if (photo) {
                 photo.addEventListener('dblclick', function(e) {
                     e.preventDefault();
-                    var colors = ['#3a86ff', '#8338ec', '#ff006e', '#ffbe0b', '#06d6a0', '#fb5607'];
-                    for (var i = 0; i < 40; i++) {
-                        var piece = document.createElement('div');
-                        piece.className = 'confetti-piece';
-                        var color = colors[Math.floor(Math.random() * colors.length)];
-                        var size = Math.random() * 8 + 6;
-                        var startX = e.clientX + (Math.random() - 0.5) * 100;
-                        var startY = e.clientY + (Math.random() - 0.5) * 50;
-                        var shapes = ['50%', '0%', '30%'];
-                        piece.style.cssText = 'left:' + startX + 'px;top:' + startY + 'px;width:' + size + 'px;height:' + size + 'px;background:' + color + ';border-radius:' + shapes[Math.floor(Math.random() * 3)] + ';animation-duration:' + (1 + Math.random()) + 's;';
-                        document.body.appendChild(piece);
-                        setTimeout(function(p) { p.remove(); }.bind(null, piece), 2000);
-                    }
+                    spawnConfetti(e.clientX, e.clientY, 40, 100);
                 });
             }
 
@@ -627,27 +627,20 @@
                     konamiIdx++;
                     if (konamiIdx === konamiCode.length) {
                         konamiIdx = 0;
-                        // 触发彩蛋
                         var msg = document.createElement('div');
                         msg.className = 'konami-message';
                         msg.innerHTML = '🎮 你发现了隐藏彩蛋！<br><span style="font-size:0.8em;font-weight:400;color:#a78bfa;">你是真正的高手 ✨</span>';
                         document.body.appendChild(msg);
                         setTimeout(function() { msg.classList.add('show'); }, 50);
-                        // 全屏烟花
-                        var colors = ['#3a86ff', '#8338ec', '#ff006e', '#ffbe0b', '#06d6a0', '#fb5607'];
+                        // 全屏烟花（复用 spawnConfetti）
                         for (var i = 0; i < 80; i++) {
                             (function(idx) {
                                 setTimeout(function() {
-                                    var piece = document.createElement('div');
-                                    piece.className = 'confetti-piece';
-                                    var color = colors[Math.floor(Math.random() * colors.length)];
-                                    var size = Math.random() * 10 + 6;
-                                    var startX = Math.random() * window.innerWidth;
-                                    var startY = Math.random() * window.innerHeight * 0.5;
-                                    var shapes = ['50%', '0%', '30%'];
-                                    piece.style.cssText = 'left:' + startX + 'px;top:' + startY + 'px;width:' + size + 'px;height:' + size + 'px;background:' + color + ';border-radius:' + shapes[Math.floor(Math.random() * 3)] + ';animation-duration:' + (1.5 + Math.random()) + 's;';
-                                    document.body.appendChild(piece);
-                                    setTimeout(function() { piece.remove(); }, 3000);
+                                    spawnConfetti(
+                                        Math.random() * window.innerWidth,
+                                        Math.random() * window.innerHeight * 0.5,
+                                        1, 20
+                                    );
                                 }, idx * 30);
                             })(i);
                         }
