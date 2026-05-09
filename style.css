@@ -974,16 +974,45 @@
         }
 
         /* 奖项计数 */
+        .honors-count-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
         .honors-count {
-            text-align: right;
             color: var(--gray);
             font-size: 0.9rem;
-            margin-bottom: 10px;
             font-weight: 500;
         }
         .honors-count strong {
             color: var(--primary);
             font-size: 1.1rem;
+        }
+        .export-txt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.45rem 1rem;
+            background: var(--light);
+            border: 1px solid var(--light-3);
+            border-radius: 4px;
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+            white-space: nowrap;
+        }
+        .export-txt-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .export-txt-btn:active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         /* 图片弹窗 */

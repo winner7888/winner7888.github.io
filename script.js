@@ -473,6 +473,91 @@
                 }
             });
 
+            // 导出 TXT 功能
+            var exportTxtBtn = document.getElementById('exportTxtBtn');
+            exportTxtBtn.addEventListener('click', function() {
+                if (typeof honorsData === 'undefined') return;
+
+                var activeFilters = getActiveFilters();
+                var sort = currentSort;
+
+                // 筛选
+                var filtered = activeFilters.length === 0 ? [] : honorsData.filter(function(h) {
+                    return activeFilters.indexOf(h.category) !== -1;
+                });
+
+                if (filtered.length === 0) {
+                    // 显示提示 Toast
+                    var toast = document.createElement('div');
+                    toast.className = 'celebration-toast';
+                    toast.innerHTML = '<i class="fas fa-info-circle"></i> 当前列表为空，无法导出';
+                    document.body.appendChild(toast);
+                    setTimeout(function() { toast.classList.add('show'); }, 50);
+                    setTimeout(function() {
+                        toast.classList.remove('show');
+                        setTimeout(function() { toast.remove(); }, 500);
+                    }, 2500);
+                    return;
+                }
+
+                // 排序（与 renderHonors 逻辑一致）
+                if (sort !== 'default' && filtered.length > 0) {
+                    filtered.sort(function(a, b) {
+                        var dateA = new Date(a.date.replace(/\./g, '-'));
+                        var dateB = new Date(b.date.replace(/\./g, '-'));
+                        return sort === 'desc' ? dateB - dateA : dateA - dateB;
+                    });
+                }
+
+                // 构建文本内容
+                var sortNames = { default: '默认', desc: '最新优先', asc: '最早优先' };
+                var catDesc = activeFilters.length < Object.keys(categoryNames).length - 1
+                    ? activeFilters.map(function(f) { return categoryNames[f] || f; }).join('、')
+                    : '全部';
+
+                var now = new Date();
+                var dateStr = now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0') + ' ' +
+                    String(now.getHours()).padStart(2, '0') + ':' +
+                    String(now.getMinutes()).padStart(2, '0');
+
+                var lines = [];
+                lines.push('刘宇航 - 荣誉奖项列表');
+                lines.push('筛选分类：' + catDesc);
+                lines.push('排序方式：' + (sortNames[sort] || sort));
+                lines.push('导出时间：' + dateStr);
+                lines.push('');
+                lines.push('========================================');
+                lines.push('');
+
+                filtered.forEach(function(h, i) {
+                    var catName = categoryNames[h.category] || h.category;
+                    lines.push((i + 1) + '. ' + h.title);
+                    lines.push('   ' + h.desc);
+                    lines.push('   日期：' + h.date + '  |  分类：' + catName);
+                    lines.push('');
+                });
+
+                lines.push('========================================');
+                lines.push('共计：' + filtered.length + ' 项');
+
+                var txtContent = lines.join('\n');
+
+                // 触发下载
+                var blob = new Blob(['\uFEFF' + txtContent], { type: 'text/plain;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = '荣誉奖项_' + catDesc.replace(/[\/\\]/g, '_') + '_' + filtered.length + '项.txt';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function() {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            });
+
             // 灯箱关闭事件
             document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
             document.getElementById('lightbox').addEventListener('click', function(e) {
