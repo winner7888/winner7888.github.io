@@ -28,6 +28,8 @@ var honorsData = [
     // ===== 荣誉称号 =====
     { title: '河北省省级三好学生', desc: '2024-2025学年', date: '2025.04', category: 'awards', icon: 'fas fa-trophy', image: 'images/省三好.jpg' },
     { title: '校级十佳本科生', desc: '2024年度', date: '2025.05', category: 'awards', icon: 'fas fa-trophy', image: 'images/十佳.jpg' },
+    { title: '校级优秀毕业设计', desc: '2026届', date: '2026.06', category: 'awards', icon: 'fas fa-trophy', image: 'images/毕设.jpg' },
+    { title: '校级优秀毕业生', desc: '2026年度', date: '2026.04', category: 'awards', icon: 'fas fa-trophy', image: 'images/优秀毕业.jpg' },
     { title: '校级优秀团干部标兵', desc: '2024年度', date: '2025.05', category: 'awards', icon: 'fas fa-trophy', image: 'images/优干标兵.jpg' },
     { title: '校级三好学生标兵', desc: '2023-2024学年', date: '2024.11', category: 'awards', icon: 'fas fa-trophy', image: 'images/校三好标兵.jpg' },
     { title: '校级优秀团员标兵', desc: '2023年度', date: '2024.05', category: 'awards', icon: 'fas fa-trophy', image: 'images/优团标兵.jpg' },
@@ -52,6 +54,7 @@ var honorsData = [
     { title: '校综合二等奖学金', desc: '2022-2023学年第一学期', date: '2023.05', category: 'scholarship', icon: 'fas fa-trophy', image: 'images/2等奖学金.jpg' },
     { title: '校综合三等奖学金', desc: '2022-2023学年第二学期', date: '2023.10', category: 'scholarship', icon: 'fas fa-trophy', image: 'images/3等奖学金.jpg' },
     { title: '英语四级单项奖学金', desc: '2022-2023学年', date: '2023.11', category: 'scholarship', icon: 'fas fa-trophy', image: 'images/4级奖学金.jpg' },
+    { title: '创新创业奖学金', desc: '2025年度', date: '2026.05', category: 'scholarship', icon: 'fas fa-trophy', image: 'images/科创奖学金2.jpg' },
     { title: '创新创业奖学金', desc: '2024年度', date: '2025.05', category: 'scholarship', icon: 'fas fa-trophy', image: 'images/科创奖学金.jpg' },
 
     // ===== 语言能力 =====
