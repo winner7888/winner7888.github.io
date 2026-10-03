@@ -77,5 +77,5 @@ var honorsData = [
     { title: '雷锋月主题征文活动', desc: '院级三等奖', date: '2023.04', category: 'activities', icon: 'fas fa-star', image: 'images/雷锋月.jpg' },
     { title: '东北大学秦皇岛分校2026届毕业生档案馆征文活动', desc: '档案馆征文留念', date: '2026.06', category: 'activities', icon: 'fas fa-star', image: 'images/档案馆征文.jpg' },
     { title: '东北大学秦皇岛分校2026届毕业生校史馆参观活动', desc: '校史馆参观留念', date: '2026.06', category: 'activities', icon: 'fas fa-star', image: 'images/校史馆参观.jpg' },
-    { title: 'Folding@home分布式计算项目', desc: '完成65,000,000积分，贡献1,100个任务包', date: '2026.08', category: 'activities', icon: 'fas fa-star', image: 'images/folding.png' }
+    { title: 'Folding@home分布式计算项目', desc: '完成65,000,000积分，贡献1,100个任务包', date: '2026.08', category: 'activities', icon: 'fas fa-star', image: 'images/folding.jpg' }
 ];
