@@ -7,6 +7,7 @@
 
 var honorsData = [
     // ===== 专业竞赛 =====
+    { title: '中国国际大学生创新大赛', desc: '作品《\u201C翼\u201D览无余\u2014\u2014风电叶片智能检测系统领跑者》，国家级三等奖', date: '2025.06', category: 'ai', image: 'images/国创国.jpg' },
     { title: '全球校园人工智能算法精英大赛（算法挑战赛）', desc: '作品《公共巴士辅助无线充电的电动汽车调度》，国家级一等奖（全国第一名）', date: '2024.11', category: 'ai', image: 'images/挑战国.jpg' },
     { title: '全球校园人工智能算法精英大赛（算法应用赛）', desc: '作品《无人车视觉巡航》，国家级一等奖', date: '2024.12', category: 'ai', image: 'images/应用国.jpg' },
     { title: '全球校园人工智能算法精英大赛（算法创新赛）', desc: '作品《\u201C翼\u201D览无余\u2014\u2014风电机组故障智能检测系统》，国家级一等奖', date: '2025.12', category: 'ai', image: 'images/创新国.jpg' },
@@ -73,5 +74,7 @@ var honorsData = [
     { title: '\u201C东秦廉韵\u201D廉洁文化作品大赛', desc: '校级三等奖', date: '2024.09', category: 'activities', icon: 'fas fa-star', image: 'images/廉洁.jpg' },
     { title: '\u201C学廉知纪\u00B7崇洁尚廉\u201D知识竞赛', desc: '院级一等奖', date: '2025.11', category: 'activities', icon: 'fas fa-star', image: 'images/廉洁2.jpg' },
     { title: '\u201C一二\u00B7九\u201D运动主题征文活动', desc: '院级三等奖', date: '2023.12', category: 'activities', icon: 'fas fa-star', image: 'images/129.jpg' },
-    { title: '雷锋月主题征文活动', desc: '院级三等奖', date: '2023.04', category: 'activities', icon: 'fas fa-star', image: 'images/雷锋月.jpg' }
+    { title: '雷锋月主题征文活动', desc: '院级三等奖', date: '2023.04', category: 'activities', icon: 'fas fa-star', image: 'images/雷锋月.jpg' },
+    { title: '东北大学秦皇岛分校2026届毕业生档案馆征文活动', desc: '档案馆征文留念', date: '2026.06', category: 'activities', icon: 'fas fa-star', image: 'images/档案馆征文.jpg' },
+    { title: '东北大学秦皇岛分校2026届毕业生校史馆参观活动', desc: '校史馆参观留念', date: '2026.06', category: 'activities', icon: 'fas fa-star', image: 'images/校史馆参观.jpg' }
 ];
